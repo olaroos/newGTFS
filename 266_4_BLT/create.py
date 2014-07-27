@@ -42,7 +42,7 @@ if (int(case) == 1):
 
     for i in range(0,32):
         stationid = str(i+1)
-        MotherString = MotherString + "<img src='./img/stationDot42.png' class='imgStation4' name='4"+ namenogap[i] +"' style='left:" + str((i)*left) + ";top: 120px; position:absolute; width:22px' id=" + ids[i] + " left=" + str((i)*left) + "px top=120px stationid=" + stationid + " ng-click='getStationInfo($event)' track='6' posTime='' posBuss='' negBuss='' negTime=''>"
+        MotherString = MotherString + "<img src='./img/stationDot42.png' class='imgStation4 hoverClass' name='4"+ namenogap[i] +"' style='left:" + str((i)*left) + ";top: 120px; position:absolute;' id=" + ids[i] + " left=" + str((i)*left) + "px top=120px stationid=" + stationid + " ng-click='getStationInfo($event)' track='4' posTime='' posBuss='' negBuss='' negTime=''>"
     print MotherString
 
 if (int(case) == 2):
@@ -73,7 +73,13 @@ if (int(case) == 3):
 
     print MotherString
 
+if (int(case) == 4):
 
+    MotherString = ""
+    for i in range(0,32):
+        stationid = str(i+1)
+        MotherString = MotherString + "<div class='imgStation4' name='1"+ namenogap[i] +"' style='left:" + str((i)*left) + ";top: 120px; position:absolute;' id=" + ids[i] + " left=" + str((i)*left) + "px top=120px stationid=" + stationid + " ng-click='getStationInfo($event)' track='4' posTime='' posBuss='' negBuss='' negTime=''> </div> "
+    print MotherString
 
 
 
