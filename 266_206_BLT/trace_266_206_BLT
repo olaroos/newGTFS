@@ -1,0 +1,156 @@
+#!/bin/bash
+
+# VL:
+# agency_id = 266
+# route_type = 3	i.e. Buss
+
+
+# routes.txt = route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_color,route_text_color
+
+#	$1 = route_id
+#	$2 = agency_id
+#	$3 = route_short_name
+#	$4 = route_long_name
+#	$5 = route_desc
+#	$6 = route_type
+#	$7 = route_url
+#	$8 = route_color
+#	$9 = route_text_color
+
+# trips.txt = route_id,service_id,trip_id,trip_headsign,trip_short_name,direction_id,block_id,shape_id
+
+# 	$1 = route_id
+#	$2 = service_id
+# 	$3 = trip_id
+#	$4 = trip_headsign
+#	$5 = trip_short_name
+# 	$6 = direction_id
+#	$7 = block_id
+#	$8 = shape_id
+
+# stop_times.txt = trip_id,arrival_time,departure_time,stop_id,stop_sequence,stop_headsign,pickup_type,drop_off_type,shape_dist_traveled
+
+#	$1 = trip_id
+#	$2 = arrival_time
+#	$3 = departure_time
+#	$4 = stop_id
+#	$5 = stop_sequence
+#	$6 = stop_headsign
+#	$7 = pickup_type
+#	$8 = drop_off_type
+#	$9 = shape_dist_traveled
+
+# calendar.txt = service_id,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date,end_date
+
+#	$1 	= service_id
+#	$2 	= monday
+# 	$3 	= tuesday
+# 	$4 	= wednesday
+#	$5 	= thursday
+#	$6 	= friday
+#	$7 	= saturday
+#	$8 	= sunday
+#	$9 	= start_date
+#	$10 = end_date	
+
+# linje6 : 	266_206_BLT,	266,	6,	,	,	3,	http://www.ResRobot.se,,
+#			266_6_BLT,		266,	6,	,	,	3,	http://www.ResRobot.se,,
+
+#extract services from VL
+if [ $1 = "1" ]; then
+	cat routes.txt | awk 'BEGIN { FS=",";}; { if ( ($2 ==266) && ($6 == 3) ){print $0 } };' > VL
+fi
+
+#extract track 6 from VL
+if [ $1 = "2" ]; then
+	cat VL | awk 'BEGIN {FS=",";} { if ( ($3 == 6) ){ print $0 } }' > track6/VL_L6
+fi
+
+#use route_short_name 266_6_BLT
+if [ $1 = "3" ]; then
+	cat ../trips.txt | awk 'BEGIN {FS=",";} { if ( $1 == "266_206_BLT" ) {print $0} }' > 266_206_BLT_trips
+fi
+# Extract unique service_id for track 206 
+if [ $1 = "4" ]; then
+	rm 266_206_BLT_unique_service_ids
+	touch 266_206_BLT_unique_service_ids
+	cat 266_206_BLT_trips | awk '
+		BEGIN {FS=","} 
+		{ uniqueValues[$2] = $2 } 
+		END { for (i in uniqueValues) {print uniqueValues[i] } }'  >> 266_206_BLT_unique_service_ids
+fi
+
+# Now manually cut down the stop_times.txt to fit this track 206, from 266_206_BLT_trips --> first:  last: 
+# I save it as track6/VL_L6_stop_times_truncated.txt
+if [ $1 = "5" ]; then
+	declare -a trip6routeId
+	declare -a trip6serviceId
+	declare -a trip6tripId
+	declare -a trip6full
+	trip6routeId=(`cat track6/VL_L6_trips | awk 'BEGIN {FS=",";} {print $1}'`)
+	trip6serviceId=(`cat track6/VL_L6_trips | awk 'BEGIN {FS=",";} {print $2}'`)
+	trip6tripId=(`cat track6/VL_L6_trips | awk 'BEGIN {FS=",";} {print $3}'`)
+	trip6full=(`cat track6/VL_L6_trips | awk 'BEGIN {FS=",";} {print $0}'`)	
+	arrayServiceId=$"`cat track6/VL_L6_service_id`"
+
+	for item in $arrayServiceId; do
+		rm "track6/VL_L6_trips_stops_service_id${item}"
+		touch "track6/VL_L6_trips_stops_service_id${item}"	
+		for ((i=0; i<${#trip6full[@]}; ++i)); do
+			echo ${trip6full[$i]} >> "track6/VL_L6_trips_stops_service_id${item}"	
+			route_id=${trip6routeId[$i]}
+			trip_id=${trip6tripId[$i]}
+			service_id=${trip6serviceId[$i]}
+			cat track6/VL_L6_stop_times_truncated.txt | awk -v trip_id=$trip_id -v service_id=$service_id -v route_id=$route_id 'BEGIN {FS=",";} { if ( ($1 == trip_id) && ($2 == service_id) )  {print route_id "," service_id "," $0} }' >> "track6/VL_L6_trips_stops_service_id${item}"
+		done		
+	done
+fi
+
+# Remove unwanted names
+if [ $1 = "6" ]; then
+	arrayServiceId=$"`cat track6/VL_L6_service_id`"
+	for item in $arrayServiceId; do
+		cat "track6/VL_L6_trips_stops_service_id${item}" | awk -v item=$item 'BEGIN {FS=",";} 
+		{ if ( ($2 == item) )
+			{ if ( ($4 != "RönnbyC") && ($4 != "Finnslättennorra") && ($4 != "Stenby")) 
+				{ print $0 } 
+					else 
+				{ print " "}
+			}	
+		}' >> "track6/VL_L6_trips_stops_service_id_${item}_truncated"
+	done
+fi
+
+if [ $1 = "7" ]; then
+	arrayServiceId=$"`cat track6/VL_L6_service_id`"
+	for item in $arrayServiceId; do
+		python makeTableEntry.py "track6/VL_L6_trips_stops_service_id_${item}_truncated" "${item}"		
+	done
+fi
+
+
+# get dates when service_id is used 
+if [ $1 = "8" ]; then
+	rm track6/VL_L6_service_id_dates
+	touch track6/VL_L6_service_id_dates
+	service_id=$"`cat track6/VL_L6_service_id`"
+	for item in $service_id 
+		do 
+			cat calendar.txt | awk -v item=$item '
+			BEGIN {FS=","; print item} 
+			{ 
+				if ( ($1 == item) ){
+					print $0
+				}
+			} 
+			' >> track6/VL_L6_service_id_dates
+			cat calendar_dates.txt | awk -v item=$item '
+			BEGIN {FS=","} 
+			{ 
+				if ( ($1 == item) && ($3 -eq 1 ) ){
+					print $2
+				}
+			} 
+			' >> track6/VL_L6_service_id_dates
+		done		
+fi
