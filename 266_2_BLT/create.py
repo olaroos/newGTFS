@@ -42,7 +42,7 @@ if (int(case) == 1):
 
     for i in range(0,34):
         stationid = str(i+1)
-        MotherString = MotherString + "<img src='./img/stationDot22.png' class='imgStation2 hoverClass' name='2"+ namenogap[i] +"' style='left:" + str((i)*left) + ";top: 120px; position:absolute;' id=" + ids[i] + " left=" + str((i)*left) + "px top=120px stationid=" + stationid + " ng-click='getStationInfo($event)' track='2' posTime='' posBuss='' negBuss='' negTime=''>"
+        MotherString = MotherString + "<img src='./img/stationDot22.png' class='imgStation2 hoverClass' name='2"+ namenogap[i] +"' style='left:" + str((i)*left) + ";top: 120px; position:absolute;' id=" + ids[i] + " left=" + str((i)*left) + "px top=120px stationid=" + stationid + " ng-click='selectStation($event)' track='2' posTime='' posBuss='' negBuss='' negTime=''>"
     print MotherString
 
 if (int(case) == 2):
@@ -68,7 +68,7 @@ if (int(case) == 3):
 
     MotherString = "{ "
     for i in range(0,34):
-        MotherString = MotherString + "'" + ids[i] + "' : '" + str(i) + "', "
+        MotherString = MotherString + "'" + ids[i] + "' : '" + str(i) + "', '" + str(i) + "' : '" + ids[i] + "', ";
     MotherString = MotherString + " }"
 
     print MotherString
@@ -78,7 +78,7 @@ if (int(case) == 4):
     MotherString = ""
     for i in range(0,34):
         stationid = str(i+1)
-        MotherString = MotherString + "<div  class='imgStation2' name='1"+ namenogap[i] +"' style='left:" + str((i)*left) + ";top: 120px; position:absolute;' id=" + ids[i] + " left=" + str((i)*left) + "px top=120px stationid=" + stationid + " ng-click='getStationInfo($event)' track='2' posTime='' posBuss='' negBuss='' negTime=''> </div> "
+        MotherString = MotherString + "<div  class='imgStation2' name='1"+ namenogap[i] +"' style='left:" + str((i)*left) + ";top: 120px; position:absolute;' id=" + ids[i] + " left=" + str((i)*left) + "px top=120px stationid=" + stationid + " ng-click='selectStation($event)' track='2' posTime='' posBuss='' negBuss='' negTime=''> </div> "
     print MotherString
 
 
