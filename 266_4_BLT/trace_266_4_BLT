@@ -159,7 +159,7 @@ if [ $1 = "2" ]; then
 fi
 
 # --------------------------------------------------------	
-
+# OBS YOU HAVE TO CHANGE THE INT BELOW TO MATCH trackNumber
 if [ $1 = "3" ]; then
 	arrayServiceId=$"`cat 266_${trackNumber}_BLT_service_id`"
 	for item in $arrayServiceId; do
@@ -168,7 +168,7 @@ if [ $1 = "3" ]; then
 		cat "parsed/266_${trackNumber}_BLT_trips_stops_service_id_${item}" | awk -v item=$item 'BEGIN {FS=",";} 
 		{ if ( ($2 == item) )
 			{ if ( ($4 != "Brottberga") && ($4 != "NorraMalmaberg") && ($4 != "Finnslättennorra")) 
-				{ print $1","$2","$3","$4","$5",1"$6","$7",,,,"}
+				{ print $1","$2","$3","$4","$5",4"$6","$7",,,,"}
 					else 
 				{ print " "}
 			}	
@@ -229,5 +229,12 @@ if [ $1 = "10" ]; then
 			{ if ($1 == stationId ) 
 				{ print $2 }
 			} ' >> "266_${trackNumber}_BLT_stationNames"
+	done
+fi
+
+if [ $1 = "push" ]; then
+	arrayServiceId=$"`cat 266_${trackNumber}_BLT_service_id`"
+	for item in $arrayServiceId; do
+		python makeTableEntry.py "parsed/266_${trackNumber}_BLT_trips_stops_service_id_${item}_trunced" "${item}" "${trackNumber}" 		
 	done
 fi

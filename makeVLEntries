@@ -1,18 +1,18 @@
 python clearTables.py
 cd 266_1_BLT
-bash trace_266_1_BLT 6
+bash trace_266_1_BLT push
 cd ..
 cd 266_2_BLT
-bash trace_266_2_BLT 6
+bash trace_266_2_BLT push
 cd ..
 cd 266_3_BLT
-bash trace_266_3_BLT 6
+bash trace_266_3_BLT push
 cd ..
 cd 266_4_BLT
-bash trace_266_4_BLT 6
+bash trace_266_4_BLT push
 cd ..
 cd 266_5_BLT
-bash trace_266_5_BLT 6
+bash trace_266_5_BLT push
 cd ..
 cd 266_6_BLT
-bash trace_266_6_BLT 6
+bash trace_266_6_BLT push

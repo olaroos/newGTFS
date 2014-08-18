@@ -58,7 +58,7 @@
 
 #use route_short_name 266_1_BLT
 
-trackNumber="2"
+trackNumber="1"
 
 # --------------------------------------------------------
 
@@ -229,5 +229,12 @@ if [ $1 = "10" ]; then
 			{ if ($1 == stationId ) 
 				{ print $2 }
 			} ' >> "266_${trackNumber}_BLT_stationNames"
+	done
+fi
+
+if [ $1 = "push" ]; then
+	arrayServiceId=$"`cat 266_${trackNumber}_BLT_service_id`"
+	for item in $arrayServiceId; do
+		python makeTableEntry.py "parsed/266_${trackNumber}_BLT_trips_stops_service_id_${item}_trunced" "${item}" "${trackNumber}" 		
 	done
 fi
