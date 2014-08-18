@@ -103,7 +103,7 @@ earliestTime    = findEarliestDep(serviceB)
 latestTime      = findLatestDep(serviceB)
 
 
-openFile = codecs.open("dumpPy/service_id_matchtimes", "a");
+openFile = codecs.open("dumpPy/266_6_BLT_service_id_matchtimes", "a");
 openFile.write(earliestTime+"\n")
 openFile.write(latestTime+"\n")
 openFile.close()
