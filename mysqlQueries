@@ -1,0 +1,2 @@
+create table VL (id_num int(11), jsonFile varchar(100000), service_id int(11));
+create table css (jsonFile varchar(100000));
