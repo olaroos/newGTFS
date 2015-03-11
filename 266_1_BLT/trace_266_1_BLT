@@ -167,7 +167,7 @@ if [ $1 = "3" ]; then
 		touch "parsed/266_${trackNumber}_BLT_trips_stops_service_id_${item}_trunced"
 		cat "parsed/266_${trackNumber}_BLT_trips_stops_service_id_${item}" | awk -v item=$item 'BEGIN {FS=",";} 
 		{ if ( ($2 == item) )
-			{ if ( ($4 != "NorraGryta") && ($4 != "Hamregatan") && ($4 != "VästeråsCentralstation") && ($4 != "Björnögården") && ($4 != "Björnöbadet")) 
+			{ if ( ($4 != "Skälby") && ($4 != "Bjurhovda") && ($4 != "VästeråsCentralstation") && ($4 != "Björnögården") && ($4 != "Björnöbadet")) 
 				{ print $1","$2","$3","$4","$5",1"$6","$7",,,,"}
 					else 
 				{ print " "}
