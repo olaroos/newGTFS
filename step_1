@@ -63,5 +63,5 @@ fi
 
 #extract track 6 from VL
 if [ $1 = "2" ]; then
-	cat VL | awk 'BEGIN {FS=",";} { if ( ($3 == 6) ){ print $0 } }' > track6/VL_L6
+	cat VL | awk 'BEGIN {FS=",";} { if ( ($3 == 6) ){ print $0 } }' > 266_6_BLT/VL_L6
 fi
