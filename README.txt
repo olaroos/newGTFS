@@ -45,27 +45,27 @@ bash step_1 2
 Step 2:
 -------
 
-Enter each folder and run the following file "trace_${route_number}"
-
-bash trace_${route_number} X
+Enter each route-specific folder and run: `bash trace_${route_number} x`
 	
-X is 1: 
-	This will cut out all data that belongs to the choosen route and company (${route_number} and VL). 
-	
-X is 2: 
-	This will sort out all trip information for each route_id and move them to the parsed-folder.
+	x = 1: 
+	------
+		This will cut out all data that belongs to the choosen route and company (${route_number} and VL). 
+		
+	x = 2:	
+	------ 
+		OBS! You may have to update line 157 if endstations has changed on a specific route. 
+		This will sort out all trip information for each route_id and move them to the parsed-folder.
 
-Before executing the following command you need to allow your current ip to make changes
-to the database on DigitalOcean as some python scripts will make calls to the database.
+	x = 3: 
+	------
+		OBS! Allow your current ip to make changes on DigitalOcean database.
+		This will sort out needed data to folder dumpPy and invoking the following scripts: 
 
-X is 3:
-	Invoking the following python scripts: 
-
-		python makeTableEntry.py
-		python findLastAndFirst.py
-		python mapServiceIDtoDate.py
-			will output dumpPy/266_'+track+'_BLT_service_id_with_datesJSON'
-			this data should be put in /vasterasbuss.dev/bin/js/angular/hellspawn.js for the javascript being able to map the current date to which route_id for a specific buss. 
+			python makeTableEntry.py
+			python findLastAndFirst.py
+			python mapServiceIDtoDate.py
+				will output dumpPy/266_'+track+'_BLT_service_id_with_datesJSON'
+				this data should be put in /vasterasbuss.dev/bin/js/angular/hellspawn.js for the javascript being able to map the current date to which route_id for a specific buss. 
 
 Step 3:
 -------
