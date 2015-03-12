@@ -1,10 +1,13 @@
+import sys
 import json
 import codecs 
 import datetime
 import time 
 
+# bussnumber        = sys.argv[1]
+
 # Match service_id with its first and last departures
-openFile = codecs.open("dumpPy/266_1_BLT_service_id_matchtimes")
+openFile = codecs.open("dumpPy/266_6_BLT_service_id_matchtimes")
 raw 	 = openFile.readlines()
 openFile.close()
 
@@ -19,11 +22,9 @@ for item in raw:
 		arrayServiceId[key].append(item.strip("\n"))
 
 # Make dictionary with date as key pointing to list with service_id
-openFile = codecs.open("dumpPy/266_1_BLT_service_id_with_dates")
+openFile = codecs.open("dumpPy/266_6_BLT_service_id_with_dates")
 raw 	 = openFile.readlines()
 openFile.close()
-
-
 
 for item in raw:
 	if (len(item.strip("\n")) < 8):
@@ -72,6 +73,6 @@ openFile = codecs.open("dumpPy/service_id_matchtimesJSON", "w")
 openFile.write(serviceIdJSON)
 openFile.close()
 
-openFile = codecs.open("dumpPy/266_1_BLT_service_id_with_datesJSON", "w")
+openFile = codecs.open("dumpPy/266_6_BLT_service_id_with_datesJSON", "w")
 openFile.write(datesJSON)
 openFile.close()

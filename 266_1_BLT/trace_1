@@ -58,7 +58,7 @@
 
 #use route_short_name 266_1_BLT
 
-trackNumber="6"
+trackNumber="1"
 compareString="266_"$trackNumber"_BLT"
 
 # compareString=${compareString}

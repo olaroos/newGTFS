@@ -58,27 +58,35 @@
 
 #use route_short_name 266_1_BLT
 
-trackNumber="6"
+trackNumber=$2
 compareString="266_"$trackNumber"_BLT"
-
+cd $compareString
 # compareString=${compareString}
 if [ $1 = "1" ]; then
-
-	declare -a myArray	
+	echo $compareString
+	cat ../trips.txt | awk -v trackNumber=${trackNumber} -v awkCompareString="$compareString" 'BEGIN {FS=",";} { if ( $1 == awkCompareString ) {print $0} }' > 266_${trackNumber}_BLT_trips
+	
 	echo "for safety, removing files that will be used"
 	rm 266_${trackNumber}_BLT_service_id
+	rm firstAndLastTrip
+	rm lineIndexes
 	rm 266_${trackNumber}_BLT_stop_times_truncated.txt
-	echo "--------------------------------------------"
-	
-	cat ../trips.txt | awk -v trackNumber=${trackNumber} -v awkCompareString="$compareString" 'BEGIN {FS=",";} { if ( $1 == awkCompareString ) {print $0} }' > 266_${trackNumber}_BLT_trips	
+
+	echo "making service_ids"
+	touch 266_${trackNumber}_BLT_service_id
 	cat 266_${trackNumber}_BLT_trips | awk '
 		BEGIN {FS=","} 
 		{ uniqueValues[$2] = $2 } 
 		END { for (i in uniqueValues) {print uniqueValues[i] } }'  >> 266_${trackNumber}_BLT_service_id
 	mkdir parsed
+	rm parsed/*
+
+	echo "trimming ../stop_times.txt"	
+	declare -a myArray	
+	lastIndex=`wc -l 266_${trackNumber}_BLT_trips | awk '{print $1}'`
+	echo $lastIndex
 	
-	lastIndex=`wc -l 266_${trackNumber}_BLT_trips | awk '{print $1}'`	
-	cat 266_${trackNumber}_BLT_trips | awk -F"," -v lastIndex=$lastIndex 'BEGIN {ORS="\n"}; {if (NR==1) {print $3}}; {if (NR==(lastIndex)) {print $3}}' >> firstAndLastTrip				
+	cat 266_${trackNumber}_BLT_trips | awk -F"," -v lastIndex=$lastIndex 'BEGIN {ORS="\n"}; {if (NR==1) {print $3}}; {if (NR==(lastIndex)) {print $3}}' >> firstAndLastTrip			
 	i=0
 	while IFS=$'\n' read -r line_data; do
     	myArray[i]="${line_data}"
@@ -102,10 +110,11 @@ fi
 
 if [ $1 = "2" ]; then
 
-	echo "removing whitespace from 266_"${trackNumber}"_BLT_trips_withoutblankspace"
-	cat '266_'${trackNumber}'_BLT_trips' | awk 'BEGIN {FS=",";} { print $0 }' | tr -d '[:blank:]' >> '266_'${trackNumber}'_BLT_trips_withoutblankspace'
-	mv '266_'${trackNumber}'_BLT_trips_withoutblankspace' '266_'${trackNumber}'_BLT_trips'
-	echo "---------"
+	rm '266_${trackNumber}_BLT_trips_withoutblankspace'
+	cat '266_${trackNumber}_BLT_trips' | awk 'BEGIN {FS=",";} { print $0 }' | tr -d '[:blank:]' >> '266_${trackNumber}_BLT_trips_withoutblankspace'
+	mv '266_${trackNumber}_BLT_trips_withoutblankspace' '266_${trackNumber}_BLT_trips'
+	rm '266_${trackNumber}_BLT_trips_withoutblankspace'
+	echo "finished trimming away the blankspaces from 266_${trackNumber}_BLT_trips_withoutblankspace"
 
 	echo "get route_ids for each service_id and move them to parsed folder"
 	arrayServiceId=$"`cat 266_${trackNumber}_BLT_service_id`"	
@@ -118,7 +127,7 @@ if [ $1 = "2" ]; then
 				{ print $0 }
 			} ' >> "parsed/266_${trackNumber}_BLT_trips_${item}"
 	done
-	echo "---------"
+	echo "finished subtask"
 
 	echo "collecting trips for each route_id and service_id, moving them to parse/266_${trackNumber}_BLT_trips_stops_service_id_#"
 	for item in $arrayServiceId; do
@@ -138,20 +147,22 @@ if [ $1 = "2" ]; then
 			cat 266_${trackNumber}_BLT_stop_times_truncated.txt | awk -v trip_id=$trip_id -v service_id=$service_id -v route_id=$route_id 'BEGIN {FS=",";} { if ($1 == trip_id )  {print route_id "," service_id "," $0} }' >> "parsed/266_${trackNumber}_BLT_trips_stops_service_id_${item}"
 		done		
 	done
-	echo "---------"
+	echo "finished subtask"
+	echo "finished main task"
 fi
 
 # OBS you may have to update the name of the stations for route ${trackNumber}
 if [ $1 = "3" ]; then
 
-	echo "clean folder from old data"
 	rm dumpPy/266_${trackNumber}_BLT_service_id_matchtimes
 	rm dumpPy/266_${trackNumber}_BLT_service_id_with_dates
-	echo "---------"
+	touch dumpPy/266_${trackNumber}_BLT_service_id_with_dates
+	touch dumpPy/266_${trackNumber}_BLT_service_id_matchtimes
 
 	arrayServiceId=$"`cat 266_${trackNumber}_BLT_service_id`"
 	for item in $arrayServiceId; do
 		rm "parsed/266_${trackNumber}_BLT_trips_stops_service_id_${item}_trunced"
+		touch "parsed/266_${trackNumber}_BLT_trips_stops_service_id_${item}_trunced"
 		cat "parsed/266_${trackNumber}_BLT_trips_stops_service_id_${item}" | awk -v item=$item 'BEGIN {FS=",";} 
 		{ if ( ($2 == item) )
 			{ if ( ($4 != "RönnbyC") && ($4 != "Finnslättennorra") && ($4 != "Stenby")) 
@@ -161,7 +172,7 @@ if [ $1 = "3" ]; then
 			}	
 		}' >> "parsed/266_${trackNumber}_BLT_trips_stops_service_id_${item}_trunced"
 	done
-	
+
 	for item in $arrayServiceId; do
 		python makeTableEntry.py "parsed/266_${trackNumber}_BLT_trips_stops_service_id_${item}_trunced" "${item}" "${trackNumber}" 		
 	done
