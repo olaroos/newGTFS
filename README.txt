@@ -24,10 +24,17 @@ The file can be found here: 				https://api.trafiklab.se/samtrafiken/gtfs/sweden
 
 -------------------------------------------------
 
+Step 0:
+-------
+
+Download the most recent data from https://api.trafiklab.se/samtrafiken/gtfs/sweden.zip?key=CZBdlJBDdqGnAnRAkgukAnQtPxUtaKq1, 
+unzip and put content in the newGTFS-folder. 
+
 Step 1:
 -------
 
-Execute "step_1":
+This step is part of figuring out which busses and which company we want to work with. step_1 is hardcoded to give us data
+for the VL company. Currently we are using VL so this step can be skipped. 
 
 bash step_1 1
 	This will parse all the current routes specific identifications for the company VL(Västmanlands Läns trafik) to the file "VL"  
@@ -58,6 +65,7 @@ X is 3:
 		python findLastAndFirst.py
 		python mapServiceIDtoDate.py
 			will output dumpPy/266_'+track+'_BLT_service_id_with_datesJSON'
+			this data should be put in /vasterasbuss.dev/bin/js/angular/hellspawn.js for the javascript being able to map the current date to which route_id for a specific buss. 
 
 Step 3:
 -------
