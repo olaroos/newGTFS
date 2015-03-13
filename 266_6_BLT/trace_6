@@ -173,6 +173,12 @@ if [ $1 = "3" ]; then
 	done
 	echo "get dates when service_id is used"
 	
+	arrayOneAndTwo=$"`cat one.txt`"
+	for item in $arrayOneAndTwo
+		do
+			one=$item
+		done
+		echo $one
 	for item in $arrayServiceId 
 		do 
 			cat ../calendar.txt | awk -v item=$item '
@@ -183,11 +189,12 @@ if [ $1 = "3" ]; then
 				}
 			} 
 			' >> dumpPy/266_${trackNumber}_BLT_service_id_with_dates
-			cat ../calendar_dates.txt | awk -v item=$item '
+			# reading a variable like this makes awk understand what it is...
+			cat ../calendar_dates.txt | awk -v item=$item -v one=$one -v two=$two '
 			BEGIN {FS=","} 
 			{ 
-				if ( ($1 == item) && ($3 -eq 1 ) ){
-					print $2
+				if ( ($2 == "20150303") ){
+					print $3
 				}
 			} 
 			' >> dumpPy/266_${trackNumber}_BLT_service_id_with_dates
