@@ -181,23 +181,27 @@ if [ $1 = "3" ]; then
 		echo $one
 	for item in $arrayServiceId 
 		do 
-			cat ../calendar.txt | awk -v item=$item '
-			BEGIN {FS=","; print item} 
+			echo $item >> dumpPy/266_${trackNumber}_BLT_service_id_with_dates
+			string=`awk -v item=$item '
+			BEGIN {FS=","} 
 			{ 
 				if ( ($1 == item) ){
 					print $0
 				}
 			} 
-			' >> dumpPy/266_${trackNumber}_BLT_service_id_with_dates
+			' ../calendar.txt`
+			python ../python_code/convert_calenderTxt.py $item $string >> dumpPy/calendar_dates_$item
+			cat dumpPy/calendar_dates_$item >> dumpPy/266_${trackNumber}_BLT_service_id_with_dates
 			# reading a variable like this makes awk understand what it is...
-			cat ../calendar_dates.txt | awk -v item=$item -v one=$one -v two=$two '
+			cat ../calendar_dates.txt | awk -v item=$item '
 			BEGIN {FS=","} 
 			{ 
-				if ( ($2 == "20150303") ){
-					print $3
+				if ( ($1 == item) ){
+					print $3$2
 				}
 			} 
 			' >> dumpPy/266_${trackNumber}_BLT_service_id_with_dates
+			rm dumpPy/calendar_dates_$item
 		done		
 
 	python mapServiceIDtoDate.py ${trackNumber}

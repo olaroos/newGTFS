@@ -24,13 +24,13 @@ The file can be found here: 				https://api.trafiklab.se/samtrafiken/gtfs/sweden
 
 -------------------------------------------------
 
-Step 0:
+0:
 -------
 
 Download the most recent data from https://api.trafiklab.se/samtrafiken/gtfs/sweden.zip?key=CZBdlJBDdqGnAnRAkgukAnQtPxUtaKq1, 
 unzip and put content in the newGTFS-folder. 
 
-Step 1:
+1:
 -------
 
 This step is part of figuring out which busses and which company we want to work with. step_1 is hardcoded to give us data
@@ -42,7 +42,14 @@ bash step_1 1
 bash step_1 2
 	Would give us the identification of a specific buss, at this time hardcoded in the file "step_1"
 
-Step 2:
+2:
+-------
+
+bash bashBin/extendFileForAwk.sh
+
+This will extend calendar.txt and calendar_dates.txt so that the last variable will no longer contain a newline/return-character making it eligible for step 3.3
+
+3:
 -------
 
 Enter each route-specific folder and run: `bash trace_${route_number} x`
