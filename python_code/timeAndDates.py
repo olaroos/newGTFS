@@ -4,7 +4,7 @@ import codecs
 import datetime
 import time 
 
-bussnumber        = sys.argv[1]
+track        = sys.argv[1]
 
 # Match service_id with its first and last departures
 openFile = codecs.open("dumpPy/266_"+track+"_BLT_service_id_matchtimes")

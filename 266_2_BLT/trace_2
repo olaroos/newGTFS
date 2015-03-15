@@ -115,12 +115,6 @@ if [ $1 = "3" ]; then
 	done
 	echo "get dates when service_id is used"
 	
-	arrayOneAndTwo=$"`cat one.txt`"
-	for item in $arrayOneAndTwo
-		do
-			one=$item
-		done
-		echo $one
 	for item in $arrayServiceId 
 		do 
 			echo $item >> dumpPy/266_${trackNumber}_BLT_service_id_with_dates
@@ -150,7 +144,7 @@ if [ $1 = "3" ]; then
 
 	# fix hardcoded JSON for webpage
 
-	python ../python_code/timeAndDates.py ${trackNumber}
+	# python ../python_code/timeAndDates.py ${trackNumber}
 
 fi
 

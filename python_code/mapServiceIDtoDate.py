@@ -46,14 +46,12 @@ for item in arrayA:
 tempArrayB = copy.deepcopy(arrayB)
 for item in arrayB:
 	if (item[0] == "2"):
-		# print arrayB[item]
-		# print tempArrayB["1"+item[1:]]
 		for idx2 in range(0, len(tempArrayB[item])):
-			for idx in range(0, len(tempArrayB["1"+item[1:]])):			
+			for idx in range(0, len(tempArrayB["1"+item[1:]])-1):	
 				if tempArrayB["1"+item[1:]][idx] == tempArrayB[item][idx2]:
 					del tempArrayB["1"+item[1:]][idx]
 			# making sure we are not removing unprocessed information
-			if len(tempArrayB[item]) > 1:
+			if len(tempArrayB[item]) > 0:
 				del tempArrayB[item][idx2]
 			else:
 				del tempArrayB[item]
