@@ -72,6 +72,7 @@ def checkRoutes(bussesArray):
 
 filename        = sys.argv[1]
 service_id      = sys.argv[2]
+track           = sys.argv[3]
 serviceA        = []
 serviceB        = {}
 busses          = []
@@ -103,7 +104,7 @@ earliestTime    = findEarliestDep(serviceB)
 latestTime      = findLatestDep(serviceB)
 
 
-openFile = codecs.open("dumpPy/266_1_BLT_service_id_matchtimes", "a");
+openFile = codecs.open("dumpPy/266_"+track+"_BLT_service_id_matchtimes", "a");
 openFile.write(earliestTime+"\n")
 openFile.write(latestTime+"\n")
 openFile.close()

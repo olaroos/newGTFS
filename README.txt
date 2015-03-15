@@ -76,4 +76,59 @@ Enter each route-specific folder and run: `bash trace_${route_number} x`
 
 Step 3:
 -------
-	
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Summary of the google standard format with highlighted numbers for awk
+
+# VL:
+# agency_id = 266
+# route_type = # i.e. Buss
+
+# routes.txt = route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_color,route_text_color
+
+#	$1 = route_id
+#	$2 = agency_id
+#	$3 = route_short_name
+#	$4 = route_long_name
+#	$5 = route_desc
+#	$6 = route_type
+#	$7 = route_url
+#	$8 = route_color
+#	$9 = route_text_color
+
+# trips.txt = route_id,service_id,trip_id,trip_headsign,trip_short_name,direction_id,block_id,shape_id
+
+# 	$1 = route_id
+#	$2 = service_id
+# 	$3 = trip_id
+#	$4 = trip_headsign
+#	$5 = trip_short_name
+# 	$6 = direction_id
+#	$7 = block_id
+#	$8 = shape_id
+
+# stop_times.txt = trip_id,arrival_time,departure_time,stop_id,stop_sequence,stop_headsign,pickup_type,drop_off_type,shape_dist_traveled
+
+#	$1 = trip_id
+#	$2 = arrival_time
+#	$3 = departure_time
+#	$4 = stop_id
+#	$5 = stop_sequence
+#	$6 = stop_headsign
+#	$7 = pickup_type
+#	$8 = drop_off_type
+#	$9 = shape_dist_traveled
+
+# calendar.txt = service_id,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date,end_date
+
+#	$1 	= service_id
+#	$2 	= monday
+# 	$3 	= tuesday
+# 	$4 	= wednesday
+#	$5 	= thursday
+#	$6 	= friday
+#	$7 	= saturday
+#	$8 	= sunday
+#	$9 	= start_date
+#	$10 = end_date	

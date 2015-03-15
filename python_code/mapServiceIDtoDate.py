@@ -1,8 +1,7 @@
 import sys
 import sys
 import json
-
-track = sys.argv[1]
+import copy
 
 def makeList(fileName):
 	theFile = open(fileName)
@@ -19,7 +18,7 @@ def makeArray(listIn):
 	outputDict = {}
 
 	for item in listIn:
-		if (len(item) < 6):
+		if (len(item) < 7):
 			outputDict[item] = []
 			saveItem        = item
 		else:
@@ -27,13 +26,13 @@ def makeArray(listIn):
 
 	return outputDict
 
-nonraw 		= makeList('dumpPy/266_'+track+'_BLT_service_id_with_dates')
-arrayA 		= makeArray(nonraw)
-
-nonraw 		= makeList('dumpPy/266_'+track+'_BLT_service_id_matchtimes')
-matchNames 	= makeArray(nonraw)
-
+track = sys.argv[1]
 arrayB = {}
+arrayC = {}
+nonraw = makeList('dumpPy/266_'+track+'_BLT_service_id_with_dates')
+arrayA = makeArray(nonraw)
+nonraw = makeList('dumpPy/266_'+track+'_BLT_service_id_matchtimes')
+matchNames = makeArray(nonraw)
 
 for item in arrayA:
 	for subItem in arrayA[item]:
@@ -43,9 +42,27 @@ for item in arrayA:
 			arrayB[subItem] = []
 			arrayB[subItem].append(item)			
 
-print arrayB
+# remove dates with prefix 2 from arrayB
+tempArrayB = copy.deepcopy(arrayB)
+for item in arrayB:
+	if (item[0] == "2"):
+		# print arrayB[item]
+		# print tempArrayB["1"+item[1:]]
+		for idx2 in range(0, len(tempArrayB[item])):
+			for idx in range(0, len(tempArrayB["1"+item[1:]])):			
+				if tempArrayB["1"+item[1:]][idx] == tempArrayB[item][idx2]:
+					del tempArrayB["1"+item[1:]][idx]
+			# making sure we are not removing unprocessed information
+			if len(tempArrayB[item]) > 1:
+				del tempArrayB[item][idx2]
+			else:
+				del tempArrayB[item]
 
-arrayC = {}
+# Remove prefix from keys
+tempArrayB2 = {}
+for item in tempArrayB:
+	tempArrayB2[item[1:]] = tempArrayB[item]
+arrayB = tempArrayB2
 
 for item in arrayB:	
 	if (len(arrayB[item]) > 1):
@@ -78,9 +95,9 @@ for item in arrayB:
 	else:
 		arrayC[item] = arrayB[item]
 		
-print arrayC
+# print arrayC
 jsonFile = json.dumps(arrayC, ensure_ascii=True)
 
-theFile = open('dumpPy/266_'+track+'_BLT_service_id_with_datesJSON', 'w')
+theFile = open('../266_'+track+'_BLT/dumpPy/266_'+track+'_BLT_service_id_with_datesJSON', 'w')
 theFile.write(jsonFile)
 theFile.close()

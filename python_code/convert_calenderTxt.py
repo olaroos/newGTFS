@@ -18,7 +18,7 @@ currentDate = startDate
 endDate = time.mktime(datetime.datetime.strptime(array[9], "%Y%m%d").timetuple())	
 
 # find out what day the startDate is:
-while currentDate < endDate:
+while currentDate <= endDate+24*60*60:
 	d = datetime.datetime.fromtimestamp(currentDate)
 	if days[time.strftime("%a", d.timetuple())]:
 		print "1"+time.strftime("%Y%m%d", d.timetuple());

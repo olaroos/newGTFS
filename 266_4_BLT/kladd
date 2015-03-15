@@ -1,8 +1,0 @@
-rm output
-array=`cat findNames2.txt`
-
-for item in $array; do
-	cat ../stops.txt | awk -v id=$item -F',' '{  if ($1 == id) print $1" "$2}' >> output
-done
-
-
