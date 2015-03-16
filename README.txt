@@ -82,10 +82,6 @@ Enter each route-specific folder and run: `bash trace_${route_number} x`
 				will output dumpPy/266_'+track+'_BLT_service_id_with_datesJSON'
 				this data should be put in /vasterasbuss.dev/bin/js/angular/hellspawn.js for the javascript being able to map the current date to which route_id for a specific buss. 
 
-4:
--------
-
-
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
