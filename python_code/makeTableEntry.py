@@ -145,10 +145,23 @@ print counter
 
 bussesJson  = json.dumps(concatBusses, ensure_ascii=True)
 
+# DB              = 'VBUSS'
+# DB_HOST         = '127.0.0.1'
+# DB_USER         = 'root'
+# DB_PASSWORD     = 'newpassword'
+
+# conn        = MySQLdb.Connection(db=DB, host=DB_HOST, user=DB_USER,passwd=DB_PASSWORD)
+# c           = conn.cursor()
+
+# c.execute("set autocommit = 1")
+
+# c.execute("""INSERT INTO VL (jsonFile, id_num, service_id) VALUES (%s, %s, %s);""", (bussesJson, track, service_id))
+# conn.close()
+
 DB              = 'VBUSS'
-DB_HOST         = '127.0.0.1'
+DB_HOST         = '188.226.223.188'
 DB_USER         = 'root'
-DB_PASSWORD     = 'newpassword'
+DB_PASSWORD     = 'lemmeltagetforti'
 
 conn        = MySQLdb.Connection(db=DB, host=DB_HOST, user=DB_USER,passwd=DB_PASSWORD)
 c           = conn.cursor()
@@ -157,16 +170,3 @@ c.execute("set autocommit = 1")
 
 c.execute("""INSERT INTO VL (jsonFile, id_num, service_id) VALUES (%s, %s, %s);""", (bussesJson, track, service_id))
 conn.close()
-
-# DB              = 'VBUSS'
-# DB_HOST         = '188.226.223.188'
-# DB_USER         = 'root'
-# DB_PASSWORD     = 'lemmeltagetforti'
-
-# conn        = MySQLdb.Connection(db=DB, host=DB_HOST, user=DB_USER,passwd=DB_PASSWORD)
-# c           = conn.cursor()
-
-# c.execute("set autocommit = 1")
-
-# c.execute("""INSERT INTO VL (jsonFile, id_num, service_id) VALUES (%s, 6, %s);""", (bussesJson, service_id))
-# conn.close()

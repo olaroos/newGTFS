@@ -50,9 +50,15 @@ for the VL company. Currently we are using VL so this step can be skipped.
 
 `bash bashBin/extendFileForAwk.sh`
 
-This will extend calendar.txt and calendar_dates.txt so that the last variable will no longer contain a newline/return-character making it eligible for step 3.3
+This will extend calendar.txt and calendar_dates.txt so that the last variable will no longer contain a newline/return-character making it eligible for step 4.3
 
 ### 3:
+
+`python python_code/clearTables.py`
+
+This will clear the database as the rows are not unique, we need to remove old data
+
+### 4:
 
 Enter each route-specific folder and run: `bash trace_${route_number} x`
 	
