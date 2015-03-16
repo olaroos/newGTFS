@@ -49,7 +49,15 @@ bash bashBin/extendFileForAwk.sh
 
 This will extend calendar.txt and calendar_dates.txt so that the last variable will no longer contain a newline/return-character making it eligible for step 3.3
 
+
 3:
+-------
+
+python python_code/clearTables.py
+
+# this will clear the tables in VBUSS. 
+
+4:
 -------
 
 Enter each route-specific folder and run: `bash trace_${route_number} x`
@@ -74,8 +82,10 @@ Enter each route-specific folder and run: `bash trace_${route_number} x`
 				will output dumpPy/266_'+track+'_BLT_service_id_with_datesJSON'
 				this data should be put in /vasterasbuss.dev/bin/js/angular/hellspawn.js for the javascript being able to map the current date to which route_id for a specific buss. 
 
-Step 3:
+4:
 -------
+
+
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
