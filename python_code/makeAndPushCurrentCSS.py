@@ -5,10 +5,10 @@ motherCSS = {}
 
 # Calculate TRACK 1! css properties -------------------------------------------
 
-theFile = open('266_1_BLT/266_1_BLT_stationIDs', 'r')
+theFile = open('../266_1_BLT/266_1_BLT_stationIDs', 'r')
 raw     = theFile.readlines()
 theFile.close()
-theFile = open('266_1_BLT/266_1_BLT_stationNames_nogap', 'r')
+theFile = open('../266_1_BLT/266_1_BLT_stationNames_nogap', 'r')
 rawName    = theFile.readlines()
 theFile.close()
 
@@ -36,10 +36,10 @@ motherCSS[1] = copy.deepcopy(css)
 
 # Calculate TRACK 2! css properties -------------------------------------------
 
-theFile = open('266_2_BLT/266_2_BLT_stationIDs', 'r')
+theFile = open('../266_2_BLT/266_2_BLT_stationIDs', 'r')
 raw     = theFile.readlines()
 theFile.close()
-theFile = open('266_2_BLT/266_2_BLT_stationNames_nogap', 'r')
+theFile = open('../266_2_BLT/266_2_BLT_stationNames_nogap', 'r')
 rawName    = theFile.readlines()
 theFile.close()
 
@@ -67,10 +67,10 @@ motherCSS[2] = copy.deepcopy(css)
 
 # Calculate TRACK 3! css properties -------------------------------------------
 
-theFile = open('266_3_BLT/266_3_BLT_stationIDs', 'r')
+theFile = open('../266_3_BLT/266_3_BLT_stationIDs', 'r')
 raw     = theFile.readlines()
 theFile.close()
-theFile = open('266_3_BLT/266_3_BLT_stationNames_nogap', 'r')
+theFile = open('../266_3_BLT/266_3_BLT_stationNames_nogap', 'r')
 rawName    = theFile.readlines()
 theFile.close()
 
@@ -98,10 +98,10 @@ motherCSS[3] = copy.deepcopy(css)
 
 # Calculate TRACK 4! css properties -------------------------------------------
 
-theFile = open('266_4_BLT/266_4_BLT_stationIDs', 'r')
+theFile = open('../266_4_BLT/266_4_BLT_stationIDs', 'r')
 raw     = theFile.readlines()
 theFile.close()
-theFile = open('266_4_BLT/266_4_BLT_stationNames_nogap', 'r')
+theFile = open('../266_4_BLT/266_4_BLT_stationNames_nogap', 'r')
 rawName    = theFile.readlines()
 theFile.close()
 
@@ -129,10 +129,10 @@ motherCSS[4] = copy.deepcopy(css)
 
 # Calculate TRACK 5! css properties -------------------------------------------
 
-theFile = open('266_5_BLT/266_5_BLT_stationIDs', 'r')
+theFile = open('../266_5_BLT/266_5_BLT_stationIDs', 'r')
 raw     = theFile.readlines()
 theFile.close()
-theFile = open('266_5_BLT/266_5_BLT_stationNames_nogap', 'r')
+theFile = open('../266_5_BLT/266_5_BLT_stationNames_nogap', 'r')
 rawName    = theFile.readlines()
 theFile.close()
 
@@ -161,10 +161,10 @@ motherCSS[5] = copy.deepcopy(css)
 
 # Calculate TRACK 6! css properties -------------------------------------------
 
-theFile = open('266_6_BLT/266_6_BLT_stationIDs', 'r')
+theFile = open('../266_6_BLT/266_6_BLT_stationIDs', 'r')
 raw     = theFile.readlines()
 theFile.close()
-theFile = open('266_6_BLT/266_6_BLT_stationNames_nogap', 'r')
+theFile = open('../266_6_BLT/266_6_BLT_stationNames_nogap', 'r')
 rawName    = theFile.readlines()
 theFile.close()
 
@@ -201,7 +201,7 @@ import MySQLdb
 DB              = 'VBUSS'
 DB_HOST         = '127.0.0.1'
 DB_USER         = 'root'
-DB_PASSWORD     = ''
+DB_PASSWORD     = 'newpassword'
 conn = MySQLdb.Connection(db=DB, host=DB_HOST, user=DB_USER,passwd=DB_PASSWORD)
 c = conn.cursor()
 
